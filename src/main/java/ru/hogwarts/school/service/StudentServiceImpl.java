@@ -3,42 +3,69 @@ package ru.hogwarts.school.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.modell.Student;
 import ru.hogwarts.school.modell.dto.StudentDTO;
+import ru.hogwarts.school.service.mapping.StudentMapper;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private Map<Long, Student> userMap = new HashMap<>();
+    private Long keyStudentMap = 0L;
 
-    public StudentDTO addStudente(Student student) {
-        if (userMap.size() >= 10000) {
-            return null;//"Превышен лемит количества контрагентов";
+    private Map<Long, Student> studentMap = new HashMap<>();
+    private StudentMapper studentMapper = new StudentMapper();
+
+    public StudentDTO addStudent(Student student) {
+
+        if (studentMap.size() >= 10) {
+            return null;//"Превышен лемит количества факультетов"
         }
-        if (userMap.containsKey(student.getId())) {
-            return null;//return "Такой контрагент уже существует"
+        for (Student bustingStudent : studentMap.values()) {
+            if (bustingStudent.getIdFronta().equals(student.getIdFronta())) {
+                return null;//"такой факультет уже существует"
+            }
         }
-        userMap.put(student.getId(), student);
-        Student studentMap = userMap.get(student.getId());
-        System.out.println("Введен данные нового студента " + studentMap);
-        return null;
+        keyStudentMap++;
+        student.setKeyIdStudentMap(keyStudentMap);
+        studentMap.put(keyStudentMap, student);
+        student = studentMap.get(keyStudentMap);
+        return studentMapper.toDto(student);
     }
 
-    ;
+    public StudentDTO findStudent(Long keyIdStudentMap) {
 
-    public StudentDTO findStudente(Long id) {
-        return null;
+        if (!studentMap.containsKey(keyIdStudentMap)) {
+            return null;// нет такого факультета
+        }
+        Student student = studentMap.get(keyIdStudentMap);
+        System.out.println("Данный id соответствует факультету - " + student);
+        return studentMapper.toDto(student);
     }
 
-    public StudentDTO updateStudent(long id, String string) {
-        return null;
+    public StudentDTO updateStudent(Student studentNew) {// Предпологается что обьект studentNew придет с измененым полем, но старым ключом от мапы.
+        Long keyIdStudentMap = studentNew.getKeyIdStudentMap();//вытаскиваем старый ключ в локальную переменную
+        if (!studentMap.containsKey(keyIdStudentMap)) {
+            return null;//нет такого фаультета
+        }
+        System.out.println("Данные Факультета - " + studentMap.get(keyIdStudentMap) + ", Изменены на -");
+        studentMap.put(keyIdStudentMap, studentNew);
+        Student student = studentMap.get(keyIdStudentMap);//явная проверка вызовом из мапы по keyIdstudentMap
+        System.out.print(student);
+        return studentMapper.toDto(student);
     }
 
-    public StudentDTO deleteStudent(long id) {
-        return null;
+    public StudentDTO deleteStudent(Long keyIdStudentMap) {
+        if (!studentMap.containsKey(keyIdStudentMap)) {
+            return null;// нет такого факультета.
+        }
+        Student student = studentMap.remove(keyIdStudentMap);
+        System.out.println("Удален факультет - " + student);
+        return studentMapper.toDto(student);
     }
 
-    public Map<Long, Student> printStudentMap() {
-        return null;
+    @Override
+    public String printStudentMap() {
+        return studentMap.toString();
     }
+
 }

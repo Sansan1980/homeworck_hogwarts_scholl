@@ -3,44 +3,84 @@ package ru.hogwarts.school.modell;
 import java.util.Objects;
 
 public class Student {
-    private Long id;
-    private String name;
-    private int age;
-    private long counter;
+    private Long idFronta;//пришло с фронта
+    private Long keyIdStudentMap;//ключь мапы + сколько добавленно в мапу
+    private Long counterStudent = 0L;//сколько созданно обьеков класса
+    private String studentName;
+    private String studentColor;
+    private String studentSpecialization;
+    private Long counter = 0L;
 
-
-    public  Student(Long id, String name, int age) {
-        this.id = counter++;
-        this.name = name;
-        this.age = age;
+    public Student() {
     }
 
-    public Long getId() {
-        return id;
+    public Student(Long idFronta, Long keyIdStudentMap, Long counterStudent, String studentName, String studentColor, String studentSpecialization) {
+        this.idFronta = idFronta;
+        this.keyIdStudentMap = keyIdStudentMap;
+        this.counterStudent = counter++;
+        this.studentName = studentName;
+        this.studentColor = studentColor;
+        this.studentSpecialization = studentSpecialization;
+
     }
 
-    public String getName() {
-        return name;
+    public Long getIdFronta() {
+        return idFronta;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdFronta(Long idFronta) {
+        this.idFronta = idFronta;
     }
 
-    public int getAge() {
-        return age;
+    public Long getKeyIdStudentMap() {
+        return keyIdStudentMap;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setKeyIdStudentMap(Long keyIdStudentMap) {
+        this.keyIdStudentMap = keyIdStudentMap;
+    }
+
+    public Long getCounterStudent() {
+        return counterStudent;
+    }
+
+    public void setCounterStudent(Long counterStudent) {
+        this.counterStudent = counterStudent;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getStudentColor() {
+        return studentColor;
+    }
+
+    public void setStudentColor(String studentColor) {
+        this.studentColor = studentColor;
+    }
+
+    public String getStudentSpecialization() {
+        return studentSpecialization;
+    }
+
+    public void setStudentSpecialization(String studentSpecialization) {
+        this.studentSpecialization = studentSpecialization;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
+                "idFronta=" + idFronta +
+                ", keyIdStudentMap=" + keyIdStudentMap +
+                ", counterStudent=" + counterStudent +
+                ", studentName='" + studentName + '\'' +
+                ", studentColor='" + studentColor + '\'' +
+                ", studentSpecialization='" + studentSpecialization + '\'' +
                 '}';
     }
 
@@ -48,11 +88,11 @@ public class Student {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Student student)) return false;
-        return getAge() == student.getAge() && Objects.equals(getId(), student.getId()) && Objects.equals(getName(), student.getName());
+        return Objects.equals(getIdFronta(), student.getIdFronta()) && Objects.equals(getKeyIdStudentMap(), student.getKeyIdStudentMap()) && Objects.equals(getCounterStudent(), student.getCounterStudent()) && Objects.equals(getStudentName(), student.getStudentName()) && Objects.equals(getStudentColor(), student.getStudentColor()) && Objects.equals(getStudentSpecialization(), student.getStudentSpecialization());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAge());
+        return Objects.hash(getIdFronta(), getKeyIdStudentMap(), getCounterStudent(), getStudentName(), getStudentColor(), getStudentSpecialization());
     }
 }

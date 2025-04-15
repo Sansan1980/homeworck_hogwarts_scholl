@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface StudentService {
-    StudentDTO addStudente(Student student) ;
-    StudentDTO findStudente(Long id);
+    StudentDTO addStudent(Student student);
 
-    StudentDTO updateStudent(long id,String string);
+    StudentDTO findStudent(Long keyIdStudentMap);
 
-    StudentDTO deleteStudent(long id);
-    Map<Long,Student> printStudentMap();
+    StudentDTO updateStudent(Student studentNew);
+
+    StudentDTO deleteStudent(Long id);
+
+    String printStudentMap();
 
 
 }

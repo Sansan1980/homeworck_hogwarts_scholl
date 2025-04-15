@@ -8,13 +8,13 @@ import ru.hogwarts.school.modell.dto.FacultyDTO;
 import java.util.Map;
 
 public interface FacultyService {
-    FacultyDTO addFaculty(Faculty faculty);
+        FacultyDTO addFaculty(Faculty faculty);
 
-    FacultyDTO findFaculty(Long keyIdFacultyMap);
+        FacultyDTO findFaculty(Long keyIdFacultyMap);
 
-    FacultyDTO updateFaculty(Faculty facultyNew);
+        FacultyDTO updateFaculty(Faculty facultyNew);
 
-    FacultyDTO deleteFaculty(Long id);
+        FacultyDTO deleteFaculty(Long id);
 
-   String printFacultyMap();
+        String printFacultyMap();
 }
